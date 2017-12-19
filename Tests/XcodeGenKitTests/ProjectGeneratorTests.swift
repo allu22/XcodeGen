@@ -62,6 +62,19 @@ func projectGeneratorTests() {
                 }
                 try expect(pbxProject.developmentRegion) == "de"
             }
+
+            $0.it("sets tabs preference on main group", closure: {
+                let options = ProjectSpec.Options(usesTabs: true)
+                let spec = ProjectSpec(basePath: "", name: "test", options: options)
+                let project = try getProject(spec)
+                guard let pbxProject = project.pbxproj.objects.projects.first?.value else {
+                    throw failure("Could't find PBXProject")
+                }
+                guard let mainGroup = project.pbxproj.objects.groups[pbxProject.mainGroup] else {
+                    throw failure("Could't find mainGroup")
+                }
+                try expect(mainGroup.usesTabs) == 1
+            })
         }
 
         $0.describe("Config") {

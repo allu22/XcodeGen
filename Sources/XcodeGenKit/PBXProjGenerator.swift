@@ -27,6 +27,10 @@ public class PBXProjGenerator {
         return spec.options.carthageBuildPath ?? "Carthage/Build"
     }
 
+    var usesTabs: Int? {
+        return spec.options.usesTabs.map({ $0 ? 1 : 0 })
+    }
+
     public init(spec: ProjectSpec, currentXcodeVersion: String) {
         self.currentXcodeVersion = currentXcodeVersion
         self.spec = spec
@@ -104,7 +108,7 @@ public class PBXProjGenerator {
             topLevelGroups.insert(rootGroup)
         }
 
-        let mainGroup = PBXGroup(reference: referenceGenerator.generate(PBXGroup.self, "Project"), children: Array(topLevelGroups), sourceTree: .group)
+        let mainGroup = PBXGroup(reference: referenceGenerator.generate(PBXGroup.self, "Project"), children: Array(topLevelGroups), sourceTree: .group, usesTabs: usesTabs)
         addObject(mainGroup)
 
         sortGroups(group: mainGroup)

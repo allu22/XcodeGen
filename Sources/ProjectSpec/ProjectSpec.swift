@@ -25,6 +25,7 @@ public struct ProjectSpec {
         public var bundleIdPrefix: String?
         public var settingPresets: SettingPresets
         public var developmentLanguage: String?
+        public var usesTabs: Bool?
 
         public enum SettingPresets: String {
             case all
@@ -47,12 +48,13 @@ public struct ProjectSpec {
             }
         }
 
-        public init(carthageBuildPath: String? = nil, createIntermediateGroups: Bool = false, bundleIdPrefix: String? = nil, settingPresets: SettingPresets = .all, developmentLanguage: String? = nil) {
+        public init(carthageBuildPath: String? = nil, createIntermediateGroups: Bool = false, bundleIdPrefix: String? = nil, settingPresets: SettingPresets = .all, developmentLanguage: String? = nil, usesTabs: Bool? = nil) {
             self.carthageBuildPath = carthageBuildPath
             self.createIntermediateGroups = createIntermediateGroups
             self.bundleIdPrefix = bundleIdPrefix
             self.settingPresets = settingPresets
             self.developmentLanguage = developmentLanguage
+            self.usesTabs = usesTabs
         }
     }
 
@@ -123,7 +125,8 @@ extension ProjectSpec.Options: Equatable {
             lhs.bundleIdPrefix == rhs.bundleIdPrefix &&
             lhs.settingPresets == rhs.settingPresets &&
             lhs.createIntermediateGroups == rhs.createIntermediateGroups &&
-            lhs.developmentLanguage == rhs.developmentLanguage
+            lhs.developmentLanguage == rhs.developmentLanguage &&
+            lhs.usesTabs == rhs.usesTabs
     }
 }
 
@@ -163,5 +166,6 @@ extension ProjectSpec.Options: JSONObjectConvertible {
         settingPresets = jsonDictionary.json(atKeyPath: "settingPresets") ?? .all
         createIntermediateGroups = jsonDictionary.json(atKeyPath: "createIntermediateGroups") ?? false
         developmentLanguage = jsonDictionary.json(atKeyPath: "developmentLanguage")
+        usesTabs = jsonDictionary.json(atKeyPath: "usesTabs")
     }
 }
