@@ -92,7 +92,7 @@ class SourceGenerator {
         return fileReference
     }
 
-    func getFileReference(path: Path, inPath: Path, name: String? = nil, sourceTree: PBXSourceTree = .group) -> String {
+    func getFileReference(path: Path, inPath: Path, name: String? = nil, sourceTree: PBXSourceTree = .group, lastKnownFileType: String? = nil) -> String {
         if let fileReference = fileReferencesByPath[path.string.lowercased()] {
             return fileReference
         } else {
@@ -105,6 +105,7 @@ class SourceGenerator {
                 reference: referenceGenerator.generate(PBXFileReference.self, path.byRemovingBase(path: spec.basePath).string),
                 sourceTree: sourceTree,
                 name: fileReferenceName,
+                lastKnownFileType: lastKnownFileType,
                 path: fileReferencePath.string
             )
             addObject(fileReference)

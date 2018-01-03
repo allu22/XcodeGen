@@ -345,12 +345,14 @@ public class PBXProjGenerator {
                     fileReference = sourceGenerator.getFileReference(
                         path: Path(dependency.reference),
                         inPath: spec.basePath,
-                        sourceTree: .buildProductsDir
+                        sourceTree: .buildProductsDir,
+                        lastKnownFileType: "wrapper.framework"
                     )
                 } else {
                     fileReference = sourceGenerator.getFileReference(
                         path: Path(dependency.reference),
-                        inPath: spec.basePath
+                        inPath: spec.basePath,
+                        lastKnownFileType: "wrapper.framework"
                     )
                 }
 
@@ -380,7 +382,11 @@ public class PBXProjGenerator {
                 if frameworkPath.extension == nil {
                     frameworkPath = Path(frameworkPath.string + ".framework")
                 }
-                let fileReference = sourceGenerator.getFileReference(path: frameworkPath, inPath: platformPath)
+                let fileReference = sourceGenerator.getFileReference(
+                    path: frameworkPath,
+                    inPath: platformPath,
+                    lastKnownFileType: "wrapper.framework"
+                )
 
                 let buildFile = PBXBuildFile(
                     reference: referenceGenerator.generate(PBXBuildFile.self, fileReference + target.name),
